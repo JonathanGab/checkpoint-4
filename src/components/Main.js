@@ -4,6 +4,7 @@ import ContactPage from '../screens/ContactPage';
 import HomePage from '../screens/HomePage';
 import RoyalAssetsPage from '../screens/RoyalAssetsPage';
 import RoyalFamilyPage from '../screens/RoyalFamilyPage';
+import FamillyForm from './FamillyForm';
 
 export default function Main() {
   return (
@@ -13,6 +14,7 @@ export default function Main() {
         <Route exact path="/royal-family" component={RoyalFamilyPage} />
         <Route exact path="/royal-assets" component={RoyalAssetsPage} />
         <Route exact path="/contact" component={ContactPage} />
+        <Route exact path="/create" component={FamillyForm} />
       </Switch>
     </main>
   );
