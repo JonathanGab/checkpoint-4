@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
+import AddAssetsPage from '../screens/AddAssetsPage';
 import ContactPage from '../screens/ContactPage';
 import HomePage from '../screens/HomePage';
 import RoyalAssetsPage from '../screens/RoyalAssetsPage';
@@ -15,6 +16,7 @@ export default function Main() {
         <Route exact path="/royal-assets" component={RoyalAssetsPage} />
         <Route exact path="/contact" component={ContactPage} />
         <Route exact path="/create" component={FamillyForm} />
+        <Route exact path="/add-assets" component={AddAssetsPage} />
       </Switch>
     </main>
   );

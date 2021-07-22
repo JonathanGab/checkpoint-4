@@ -1,10 +1,10 @@
 import React from 'react';
-import RoyalAssets from '../components/RoyalAssets';
+import TableAssets from '../components/TableAssets';
 
 export default function RoyalAssetsPage() {
   return (
     <div>
-      <RoyalAssets />
+      <TableAssets />
     </div>
   );
 }
