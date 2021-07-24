@@ -1,23 +1,27 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-import { useToasts } from 'react-toast-notifications';
+
 import API from '../APIclient';
 
 export default function AddAssets() {
-  const { addToast } = useToasts();
   const { handleSubmit, register } = useForm();
+
+  const notifySucces = () => {
+    toast.success('Your assets have been successfully added 🎉🎉');
+  };
+
+  const notifyFail = () => {
+    toast.error('Error to add your assets 😭😭');
+  };
 
   const onSubmit = async (form) => {
     try {
       await API.post('/assets', form);
-      addToast('Votre avis à bien été pris en compte', {
-        appearance: 'success',
-      });
+      notifySucces();
     } catch (err) {
       if (err) {
-        addToast("Il y a un problème lors de l'envoi de votre avis", {
-          appearance: 'error',
-        });
+        notifyFail();
       }
     }
   };

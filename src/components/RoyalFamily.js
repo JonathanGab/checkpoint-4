@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import API from '../APIclient';
+import CreateRoyalFamButton from './CreateRoyalFamButton';
 
 export default function RoyalFamily() {
   const [familly, setFamilly] = useState([]);
@@ -12,34 +12,32 @@ export default function RoyalFamily() {
   }, []);
   return (
     <div>
-      <div>
-        <NavLink exact to="/create">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="feather feather-plus-circle"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-          </svg>
-        </NavLink>
+      <div className="flex justify-end items-end w-full p-5">
+        <CreateRoyalFamButton />
       </div>
-      <div className="grid grid-flow-row grid-cols-3">
+
+      <div className="grid  grid-cols-1 grid-flow-row md:grid-cols-3 w-full h-screen px-16">
         {familly.map((fam) => (
-          <div key={fam.id}>
-            <p>name :{fam.firstname}</p>
-            <p>lastname :{fam.lastname}</p>
-            <p>{fam.description}</p>
-            <img src={fam.avatar} alt={fam.firstname} />
-            {console.log(fam.avatar)}
+          <div
+            key={fam.id}
+            className="h-96 w-2/3 flex flex-col border border-black rounded-2xl px-5"
+          >
+            <div className="p-5 w-full flex flex-col items-center">
+              <img
+                src={fam.avatar}
+                alt={fam.firstname}
+                className="p-1 w-full h-72 rounded-lg md:rounded-xl lg:rounded-lg object-contain md:h-40 md:w-40 lg:h-40 lg:w-40 "
+              />
+              {console.log(fam.avatar)}
+            </div>
+            <div className="flex flex-col">
+              <p>
+                {fam.firstname} {fam.lastname}
+              </p>
+              <div className="text-left pt-5">
+                <p>{fam.description}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>

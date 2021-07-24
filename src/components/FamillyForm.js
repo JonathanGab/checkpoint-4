@@ -1,18 +1,23 @@
 import React, { useRef } from 'react';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-import { useToasts } from 'react-toast-notifications';
+
 import API from '../APIclient';
 import Avatar from './Avatar';
 
 export default function FamillyForm() {
-  const { addToast } = useToasts();
   const { handleSubmit, setValue, register, watch } = useForm();
-
   const name = watch('name');
   const avatar = watch('avatarUrl');
-
   const avatarUploadRef = useRef();
 
+  const notifySucces = () => {
+    toast.success('Your Highness / Lord has been successfully added 👑');
+  };
+
+  const notifyFail = () => {
+    toast.error('Error while adding 🤦‍♂️🤦‍♂️');
+  };
   const handleAvatarClick = () => {
     avatarUploadRef.current.click();
   };
@@ -38,14 +43,10 @@ export default function FamillyForm() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      addToast('Votre animal a bien été ajouté', {
-        appearance: 'success',
-      });
+      notifySucces();
     } catch (err) {
       if (err) {
-        addToast("Il y a un problème lors de l'envoi de votre avis", {
-          appearance: 'error',
-        });
+        notifyFail();
       }
     }
   };

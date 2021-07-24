@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useToasts } from 'react-toast-notifications';
-import { NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import CreateAssetsButton from './CreateAssetsButton';
 import API from '../APIclient';
 
 export default function TableAssets() {
   const [assets, setAssets] = useState([]);
-  const { addToast } = useToasts();
+
+  const notifySucces = () => {
+    toast.success('Your assets have been successfully removed 👌');
+  };
+
+  const notifyFail = () => {
+    toast.error('Error to remove your assets 😭😭');
+  };
 
   useEffect(() => {
     API.get('/assets').then((res) => {
@@ -18,86 +25,71 @@ export default function TableAssets() {
     API.delete(`/assets/${id}`)
       .then((res) => {
         setAssets(Object.values((assets) => assets.filter((n) => n.id !== id)));
-        addToast('Votre compte a bien été supprimé !', {
-          appearance: 'success',
-        });
+        notifySucces();
       })
       .catch((err) => {
         window.console.error(err);
-        addToast(
-          'Il u a eu une erreur lors de la supression de votre compte !',
-          {
-            appearance: 'error',
-          }
-        );
+        notifyFail();
       });
   };
 
   return (
-    <div>
-      <div>
-        <NavLink exact to="/add-assets">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="feather feather-plus-circle"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-          </svg>
-        </NavLink>
+    <div className="w-screen">
+      <div className="flex justify-end items-end w-full p-5">
+        <CreateAssetsButton className="animate-jump" />
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <div>Weapon</div>
-            </th>
-            <th>
-              <div>Price</div>
-            </th>
-            <th>
-              <div>Image</div>
-            </th>
-            <th>
-              <div>Quantity</div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {assets.map((asset) => {
-            return (
-              <tr key={asset.id}>
-                <td>
-                  <div>{asset.weapon}</div>
-                </td>
-                <td>
-                  <div>{asset.price}</div>
-                </td>
-                <td>
-                  <div>
-                    <img src={asset.weaponImage} alt={asset.weapon} />
-                  </div>
-                </td>
-                <td>
-                  <div>{asset.quantity}</div>
-                </td>
-                <button type="button" onClick={() => deleted(asset.id)}>
-                  X
-                </button>
+      <div className="flex justify-center">
+        <div className="">
+          <table className="table-auto border border-black w-full">
+            <thead>
+              <tr className="border border-black">
+                <th className="px-16 py-3 border border-black">Weapon</th>
+                <th className="px-16 py-3 border border-black">Price</th>
+                <th className="px-16 py-3 border border-black">Image</th>
+                <th className="px-16 py-3 border border-black">Quantity</th>
+                <th className="px-16 py-3 border border-black">Delete</th>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {assets.map((asset) => {
+                return (
+                  <tr key={asset.id} className="">
+                    <td className="border border-black">
+                      <div>{asset.weapon}</div>
+                    </td>
+                    <td className="border border-black">
+                      <div>{asset.price}</div>
+                    </td>
+                    <td className="border border-black">
+                      <div className="flex justify-center items-center">
+                        <img
+                          src={asset.weaponImage}
+                          alt={asset.weapon}
+                          className="rounded-full w-28 h-28"
+                        />
+                      </div>
+                    </td>
+                    <td className="border border-black">
+                      <div>{asset.quantity}</div>
+                    </td>
+                    <td>
+                      <div className="flex justify-center items-center">
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-primary:hover"
+                          onClick={() => deleted(asset.id)}
+                        >
+                          X
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
